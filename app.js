@@ -32,6 +32,10 @@ app.get("/deleteForm", (req, res) => {
   res.sendFile(path.join(__dirname, "/templates/delete.html"));
 });
 
+app.get("/searchForm", (req, res) => {
+  res.sendFile(path.join(__dirname, "/templates/search.html"));
+});
+
 app.post("/submitData", async (req, res) => {
   const data = req.body;
   const table_name = req.query.TABLE_NAME;
@@ -52,6 +56,37 @@ console.log(query);
   } catch (error) {
     console.error("Error inserting data:", error);
     res.sendStatus(500);
+  }
+});
+
+app.post("/searchForm", async (req, res) => {
+   const tableName = req.body.table;
+   console.log(tableName);
+   const jsonData=req.body;
+    console.log("Received JSON data:", jsonData);
+delete jsonData.table;
+  let query = `SELECT * FROM ${tableName} WHERE `;
+  const values = [];
+  console.log("Received JSON data:", jsonData);
+  for (const key in jsonData) {
+    if (jsonData[key]) {
+      query += `${key} = :${key} AND `;
+      values.push(jsonData[key]);
+    }
+  }
+  query = query.slice(0, -5); // Remove the last "AND "
+  console.log("Query:", query);
+  try {
+    const connection = await oracledb.getConnection(dbConfig);
+    const result = await connection.execute(query, values);
+    connection.close();
+    // Send a JSON response containing the fetched data
+
+    res.json(result.rows);
+    console.log("Data fetched:", result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error fetching data");
   }
 });
 // Start server

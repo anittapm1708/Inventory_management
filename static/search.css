@@ -1,0 +1,108 @@
+
+.form-container {
+width:100%;
+  margin: auto;
+  padding:20px;
+  background-color: rgba(209, 209, 202, 0.255);
+  border-radius:10px;
+  font-size:0.8rem;
+}
+
+.form-control {
+    width: 30px; /* Set the width as needed */
+    font-size:0.7rem;
+    height:20px;
+}
+
+.row{
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.submit-btn{
+    text-align:center;
+}
+/* Style the submit button */
+.btn-submit {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-submit:hover {
+  background-color: #0056b3;
+}
+
+/* Optional: Add some padding to the body */
+body {
+  padding-top: 20px;
+}
+
+
+.search-table{
+  overflow-x: auto;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+
+
+.search-table {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: auto;
+  white-space: nowrap;
+  /* Adjust the height of the scrollbar */
+  max-height: 600px; /* Example height */
+  min-height: 0px;
+}
+
+.search-table::before,
+.search-table::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 10px; /* Height of the scrollbar */
+  background-color: #f2f2f2; /* Scrollbar color */
+  z-index: 1;
+}
+
+.search-table::before {
+  top: 0;
+}
+
+.search-table::after {
+  bottom: 0;
+}
+
+.search-table::before::-webkit-scrollbar,
+.search-table::after::-webkit-scrollbar {
+  display: none; /* Hide the default scrollbar */
+}
+
+.search-table::before::-webkit-scrollbar-thumb,
+.search-table::after::-webkit-scrollbar-thumb {
+  background-color: #4caf50; /* Scrollbar thumb color */
+}
