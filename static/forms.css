@@ -1,0 +1,37 @@
+/* forms.css */
+
+/* Center the form */
+.form-contain {
+  max-width: 1000px;
+  margin: auto;
+  padding:20px;
+  background-color: rgba(209, 209, 202, 0.255);
+  border-radius:20px;
+}
+
+/* Space out form elements */
+.form-label {
+  margin-bottom: 0.1rem;
+}
+
+/* Add some space at the bottom of the form */
+.form-control {
+  margin-bottom: 0.2rem;
+}
+.submit-btn{
+    text-align:center;
+}
+/* Style the submit button */
+.btn-submit {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-submit:hover {
+  background-color: #0056b3;
+}
+
+/* Optional: Add some padding to the body */
+body {
+  padding-top: 20px;
+}
