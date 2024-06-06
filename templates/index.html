@@ -13,7 +13,7 @@
         <h1 class="mb-4">Inventory Management App</h1>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                Select a Table
+                Select the customer
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" onclick="setSelectedTable('Arterra')">Arterra</a></li>
@@ -34,14 +34,14 @@
                 }
                 function redirectToForm(form) {
                     if(selectedTable === "") {
-                        alert("Please select a table.");
+                        alert("Please select a customer to continue");
                     } else {
                         location.href = `/${form}?table=${selectedTable}`;
                     }
                 }
             </script>
             <button class="btn" onclick="redirectToForm('submitForm')">Insert Records</button>
-            <button class="btn" onclick="redirectToForm('searchForm')">View records</button>
+            <button class="btn" onclick="redirectToForm('searchForm')">Search Records</button>
             <button class="btn" onclick="redirectToForm('updateForm')">Update Records</button>
             <button class="btn" onclick="redirectToForm('deleteForm')">Delete Records</button>
         </div>

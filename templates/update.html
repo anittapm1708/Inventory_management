@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href="../static/search.css" />
+        <link rel="stylesheet" href="../static/forms.css" />
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -11,22 +11,13 @@
             crossorigin="anonymous" />
         <title>Inventory Management Web App</title>
     </head>
-  <body>
-    <div>
-    <h1 class="text-center mt-4 mb-5">Search Data</h1>
-    </div>
-    <div class="container">
-      <div class="form-container">
-        <form
-          id="searchForm"
-          action="/searchForm"
-          method="POST"
-          class="form-group"
-        >
-            <input type="hidden" id="table" name="table" />
-          <input type="hidden" id="fetchedData" name="fetchedData" />
+    <body>
+        <div class="container">
+            <h1 class="text-center mt-4 mb-5">Update Data</h1>
+            <div class="form-contain">
+                <form id="myForm" method="POST" action="/updateForm" >
                     <div class="row">
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="SERIAL_NUMBER" class="form-label">Serial Number
                                 </label>
                             <input
@@ -35,7 +26,8 @@
                                 id="SERIAL_NUMBER"
                                 name="SERIAL_NUMBER" />
                         </div>
-                        <div class="col-md-2 mb-3">
+                    
+                        <div class="col-md-6 mb-3">
                             <label for="ACCOUNT_NAME" class="form-label">Account
                                 Name</label>
                             <input
@@ -44,7 +36,9 @@
                                 id="ACCOUNT_NAME"
                                 name="ACCOUNT_NAME" />
                         </div>
-                        <div class="col-md-2 mb-3">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="PRIMARY_DBA" class="form-label">Primary
                                 DBA</label>
                             <input
@@ -53,8 +47,7 @@
                                 id="PRIMARY_DBA"
                                 name="PRIMARY_DBA" />
                         </div>
-                    
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="BACKUP_DBA " class="form-label">Backup
                                 DBA</label>
                             <input
@@ -63,7 +56,9 @@
                                 id="BACKUP_DBA"
                                 name="BACKUP_DBA" />
                         </div>
-                        <div class="col-md-2 mb-3">
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="CUST_SERVICE_PARTNER"
                                 class="form-label">Customer Service
                                 Partner</label>
@@ -74,15 +69,14 @@
                                 name="CUST_SERVICE_PARTNER" />
                         </div>
                     
-                    
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="TOM" class="form-label">TOM</label>
                             <input type="text" class="form-control" id="TOM"
                                 name="TOM" />
                         </div>
-                    </div>
+                        </div>
                     <div class="row">
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="LICENSE_OWNERSHIP_CUST_SVVS"
                                 class="form-label">License Ownership Cust
                                 Svvs</label>
@@ -93,8 +87,7 @@
                                 name="LICENSE_OWNERSHIP_CUST_SVVS" />
                         </div>
                     
-                    
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="CSI_IF_CUST_PROVIDED_LICENSE"
                                 class="form-label">CSI If Cust Provided
                                 License</label>
@@ -104,7 +97,9 @@
                                 id="CSI_IF_CUST_PROVIDED_LICENSE"
                                 name="CSI_IF_CUST_PROVIDED_LICENSE" />
                         </div>
-                        <div class="col-md-2 mb-3">
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label
                                 for="CUS_POINT_OF_CONTACT_APPLICATION_OWNER"
                                 class="form-label">CUS Point of Contact
@@ -116,7 +111,7 @@
                                 name="CUS_POINT_OF_CONTACT_APPLICATION_OWNER" />
                         </div>
                     
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="LOGIN_PROCEDURE"
                                 class="form-label">Login Procedure</label>
                             <input
@@ -125,7 +120,9 @@
                                 id="LOGIN_PROCEDURE"
                                 name="LOGIN_PROCEDURE" />
                         </div>
-                        <div class="col-md-2 mb-3">
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="SERVER_NAME" class="form-label">Server
                                 Name</label>
                             <input
@@ -134,9 +131,8 @@
                                 id="SERVER_NAME"
                                 name="SERVER_NAME" />
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2 mb-3">
+                    
+                        <div class="col-md-6 mb-3">
                             <label for="IP_ADDRESS" class="form-label">IP
                                 Address</label>
                             <input
@@ -145,7 +141,9 @@
                                 id="IP_ADDRESS"
                                 name="IP_ADDRESS" />
                         </div>
-                        <div class="col-md-2 mb-3">
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="LOC_IDC" class="form-label">LOC
                                 IDC</label>
                             <input
@@ -154,8 +152,8 @@
                                 id="LOC_IDC"
                                 name="LOC_IDC" />
                         </div>
-                   
-                        <div class="col-md-2 mb-3">
+                    
+                        <div class="col-md-6 mb-3">
                             <label for="OS_TYPE" class="form-label">OS
                                 Type</label>
                             <input
@@ -164,7 +162,9 @@
                                 id="OS_TYPE"
                                 name="OS_TYPE" />
                         </div>
-                        <div class="col-md-2 mb-3">
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="INSTANCE"
                                 class="form-label">Instance</label>
                             <input
@@ -174,8 +174,7 @@
                                 name="INSTANCE" />
                         </div>
                     
-                    
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="DATABASE_NAME"
                                 class="form-label">Database Name</label>
                             <input
@@ -184,9 +183,9 @@
                                 id="DATABASE_NAME"
                                 name="DATABASE_NAME" />
                         </div>
-                    </div>
+                        </div>
                     <div class="row">
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="PLUGGABLE"
                                 class="form-label">Pluggable</label>
                             <input
@@ -195,9 +194,8 @@
                                 id="PLUGGABLE"
                                 name="PLUGGABLE" />
                         </div>
-                   
                     
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="DB_TYPE_DEV_PROD" class="form-label">DB
                                 Type Dev Prod</label>
                             <input
@@ -206,7 +204,9 @@
                                 id="DB_TYPE_DEV_PROD"
                                 name="DB_TYPE_DEV_PROD" />
                         </div>
-                        <div class="col-md-2 mb-3">
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="DB_ROLE" class="form-label">DB
                                 Role</label>
                             <input
@@ -215,9 +215,8 @@
                                 id="DB_ROLE"
                                 name="DB_ROLE" />
                         </div>
-                   
                     
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="IS_DB_DOWN" class="form-label">Is DB
                                 Down</label>
                             <input
@@ -226,7 +225,9 @@
                                 id="IS_DB_DOWN"
                                 name="IS_DB_DOWN" />
                         </div>
-                        <div class="col-md-2 mb-3">
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="LAST_UP_DOWN_DATE"
                                 class="form-label">Last Up Down Date</label>
                             <input
@@ -235,10 +236,8 @@
                                 id="LAST_UP_DOWN_DATE"
                                 name="LAST_UP_DOWN_DATE" />
                         </div>
-                    </div>
-                    <div class="row">
-                    
-                        <div class="col-md-2 mb-3">
+                   
+                        <div class="col-md-6 mb-3">
                             <label for="PRIM_SERVER" class="form-label">Primary
                                 Server</label>
                             <input
@@ -247,7 +246,9 @@
                                 id="PRIM_SERVER"
                                 name="PRIM_SERVER" />
                         </div>
-                        <div class="col-md-2 mb-3">
+                         </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="PRIM_INST" class="form-label">Primary
                                 Instance</label>
                             <input
@@ -257,8 +258,7 @@
                                 name="PRIM_INST" />
                         </div>
                     
-                    
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="INSTANCE_TYPE"
                                 class="form-label">Instance Type</label>
                             <input
@@ -267,7 +267,9 @@
                                 id="INSTANCE_TYPE"
                                 name="INSTANCE_TYPE" />
                         </div>
-                        <div class="col-md-2 mb-3">
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="DB_VERSION" class="form-label">DB
                                 Version</label>
                             <input
@@ -276,9 +278,8 @@
                                 id="DB_VERSION"
                                 name="DB_VERSION" />
                         </div>
-                   
                     
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="DB_EDITION_SE_EE" class="form-label">DB
                                 Edition SE EE</label>
                             <input
@@ -287,9 +288,9 @@
                                 id="DB_EDITION_SE_EE"
                                 name="DB_EDITION_SE_EE" />
                         </div>
-                    </div>
+                        </div>
                     <div class="row">
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="GRID_INFO" class="form-label">Grid
                                 Info</label>
                             <input
@@ -298,9 +299,8 @@
                                 id="GRID_INFO"
                                 name="GRID_INFO" />
                         </div>
-            
                     
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="FILESYSTEM_ASM_FILESYSTEM"
                                 class="form-label">Filesystem ASM
                                 Filesystem</label>
@@ -308,7 +308,9 @@
                                 id="FILESYSTEM_ASM_FILESYSTEM"
                                 name="FILESYSTEM_ASM_FILESYSTEM" " />
                         </div>
-                        <div class="col-md-2 mb-3">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="DB_SIZE_MB_GB_TB" class="form-label">DB
                                 Size MB GB TB</label>
                             <input
@@ -318,22 +320,22 @@
                                 name="DB_SIZE_MB_GB_TB" />
                         </div>
                     
-                    
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="DBID" class="form-label">DBID</label>
                             <input type="text" class="form-control" id="DBID"
                                 name="DBID" />
                         </div>
-                        <div class="col-md-2 mb-3">
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="OS_WATCHER" class="form-label">OS
                                 Watcher</label>
                             <input type="text" class="form-control"
                                 id="OS_WATCHER"
                                 name="OS_WATCHER" " />
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2 mb-3">
+                   
+                        <div class="col-md-6 mb-3">
                             <label for="BACKUP_TYPE" class="form-label">Backup
                                 Type</label>
                             <input
@@ -342,7 +344,9 @@
                                 id="BACKUP_TYPE"
                                 name="BACKUP_TYPE" />
                         </div>
-                        <div class="col-md-2 mb-3">
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="BACKUP_TO_DISK_TAPE"
                                 class="form-label">Backup to Disk Tape</label>
                             <input
@@ -352,7 +356,7 @@
                                 name="BACKUP_TO_DISK_TAPE" />
                         </div>
                     
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label
                                 for="BACKUP_LOCATION_POLICY_OR_NFS_SHARED_LOCATION"
                                 class="form-label">Backup Location Policy or NFS
@@ -363,7 +367,9 @@
                                 id="BACKUP_LOCATION_POLICY_OR_NFS_SHARED_LOCATION"
                                 name="BACKUP_LOCATION_POLICY_OR_NFS_SHARED_LOCATION" />
                         </div>
-                        <div class="col-md-2 mb-3">
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="BACKUP_SCRIPT_LOCATION"
                                 class="form-label">Backup Script
                                 Location</label>
@@ -374,8 +380,7 @@
                                 name="BACKUP_SCRIPT_LOCATION" />
                         </div>
                     
-                    
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="BACKUP_LOG_LOCATION"
                                 class="form-label">Backup Log Location</label>
                             <input
@@ -385,8 +390,8 @@
                                 name="BACKUP_LOG_LOCATION" />
                         </div>
                         </div>
-                        <div class="row">
-                        <div class="col-md-2 mb-3">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="BACKUP_SCHEDULED"
                                 class="form-label">Backup Scheduled</label>
                             <input
@@ -396,8 +401,7 @@
                                 name="BACKUP_SCHEDULED" />
                         </div>
                     
-                    
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="CATALOG_Y_N" class="form-label">Catalog
                                 Y N</label>
                             <input
@@ -406,7 +410,9 @@
                                 id="CATALOG_Y_N"
                                 name="CATALOG_Y_N" />
                         </div>
-                        <div class="col-md-2 mb-3">
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="CATALOG_DB_SERVER"
                                 class="form-label">Catalog DB Server</label>
                             <input
@@ -415,9 +421,8 @@
                                 id="CATALOG_DB_SERVER"
                                 name="CATALOG_DB_SERVER" />
                         </div>
-
                     
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="CATALOG_USER" class="form-label">Catalog
                                 User</label>
                             <input
@@ -426,7 +431,9 @@
                                 id="CATALOG_USER"
                                 name="CATALOG_USER" />
                         </div>
-                        <div class="col-md-2 mb-3">
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="FULL_BACKUP_DETAILS"
                                 class="form-label">Full Backup Details</label>
                             <input
@@ -436,9 +443,7 @@
                                 name="FULL_BACKUP_DETAILS" />
                         </div>
                     
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="INCREMENTAL_BACKUP_DETAILS"
                                 class="form-label">Incremental Backup
                                 Details</label>
@@ -448,7 +453,9 @@
                                 id="INCREMENTAL_BACKUP_DETAILS"
                                 name="INCREMENTAL_BACKUP_DETAILS" />
                         </div>
-                        <div class="col-md-2 mb-3">
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="ARCHIVE_BACKUP_DETAILS"
                                 class="form-label">Archive Backup
                                 Details</label>
@@ -459,8 +466,7 @@
                                 name="ARCHIVE_BACKUP_DETAILS" />
                         </div>
                     
-                    
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="MONITORED_BY"
                                 class="form-label">Monitored By</label>
                             <input
@@ -469,8 +475,9 @@
                                 id="MONITORED_BY"
                                 name="MONITORED_BY" />
                         </div>
-    
-                        <div class="col-md-2 mb-3">
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="LAST_AUDIT_DATE" class="form-label">Last
                                 Audit Date</label>
                             <input
@@ -480,8 +487,7 @@
                                 name="LAST_AUDIT_DATE" />
                         </div>
                     
-                    
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="LAST_AUDITED_BY" class="form-label">Last
                                 Audited By</label>
                             <input
@@ -490,132 +496,87 @@
                                 id="LAST_AUDITED_BY"
                                 name="LAST_AUDITED_BY" />
                         </div>
-                    </div>
-                    <div class="submit-btn">
-                        <button type="submit"
-                            class="btn btn-primary">Submit</button>
+                        </div>
+                        <div class="submit-btn">
+                        <button class="btn-search" id="searchButton" onclick="fetchData()">Search</button>
+                        <button class="btn-submit" type="submit">Update Data</button>
                     </div>
                     </div>
                     
-          
-        </form>
-      </div>
-      
-      <div class="search-table">
-        <div id="loading" style="display: none;">Loading...</div>
-        <table id="results">
-          <thead>
-            <tr>
-        <th>SERIAL_NUMBER</th>
-        <th>ACCOUNT_NAME</th>
-        <th>PRIMARY_DBA</th>
-        <th>BACKUP_DBA</th>
-        <th>CUST_SERVICE_PARTNER</th>
-        <th>TOM</th>
-        <th>LICENSE_OWNERSHIP_CUST_SVVS</th>
-        <th>CSI_IF_CUST_PROVIDED_LICENSE</th>
-        <th>CUS_POINT_OF_CONTACT_APPLICATION_OWNER</th>
-        <th>LOGIN_PROCEDURE</th>
-        <th>SERVER_NAME</th>
-        <th>IP_ADDRESS</th>
-        <th>LOC_IDC</th>
-        <th>OS_TYPE</th>
-        <th>INSTANCE</th>
-        <th>DATABASE_NAME</th>
-        <th>PLUGGABLE</th>
-        <th>DB_TYPE_DEV_PROD</th>
-        <th>DB_ROLE</th>
-        <th>IS_DB_DOWN</th>
-        <th>LAST_UP_DOWN_DATE</th>
-        <th>PRIM_SERVER</th>
-        <th>PRIM_INST</th>
-        <th>INSTANCE_TYPE</th>
-        <th>DB_VERSION</th>
-        <th>DB_EDITION_SE_EE</th>
-        <th>GRID_INFO</th>
-        <th>FILESYSTEM_ASM_FILESYSTEM</th>
-        <th>DB_SIZE_MB_GB_TB</th>
-        <th>DBID</th>
-        <th>OS_WATCHER</th>
-        <th>BACKUP_TYPE</th>
-        <th>BACKUP_TO_DISK_TAPE</th>
-        <th>BACKUP_LOCATION_POLICY_OR_NFS_SHARED_LOCATION</th>
-        <th>BACKUP_SCRIPT_LOCATION</th>
-        <th>BACKUP_LOG_LOCATION</th>
-        <th>BACKUP_SCHEDULED</th>
-        <th>CATALOG_Y_N</th>
-        <th>CATALOG_DB_SERVER</th>
-        <th>CATALOG_USER</th>
-        <th>FULL_BACKUP_DETAILS</th>
-        <th>INCREMENTAL_BACKUP_DETAILS</th>
-        <th>ARCHIVE_BACKUP_DETAILS</th>
-        <th>MONITORED_BY</th>
-        <th>LAST_AUDIT_DATE</th>
-        <th>LAST_AUDITED_BY</th>
+                </form>
+                
+            </div>
+        </div>
+        <script>
+    // Get the table value from the URL
+    //<!-- const urlParams = new URLSearchParams(window.location.search);
+    //const table = urlParams.get('table');
 
-  </tr>
-          </thead>
-          <tbody id="results-body">
+    // Set the action attribute of the form to include the table value
+    //document.getElementById('myForm').action = `/updateForm?TABLE_NAME=${table}`; -->
+    
+    function fetchData() {
+    event.preventDefault();
+    const serial_no = document.getElementById('SERIAL_NUMBER').value;
+    fetch(`/fetchData/${serial_no}`) // Assuming you have an endpoint to fetch data based on the incident ID
+        .then(response => response.json())
+        .then(data => {
+            populateFormFields(data);
+        })
+        .catch(error => {console.error('Error fetching data:', error);
+        alert("Record not found");
+});
+}
 
-          </tbody>
-          <!-- Results will be displayed here -->
-        </table>
-      </div>
-    </div>
-    <script>
-        // Function to get query parameters from the URL
-        function getQueryParams() {
-            const params = {};
-            const queryString = window.location.search.substring(1);
-            const regex = /([^&=]+)=([^&]*)/g;
-            let m;
-            while ((m = regex.exec(queryString))) {
-                params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
-            }
-            return params;
-        }
 
-        document.addEventListener("DOMContentLoaded", function () {
-            const params = getQueryParams();
-            if (params.table) {
-                document.getElementById("table").value = params.table;
-                console.log("table:", params.table);
-            
-            }
-        });
-      document
-        .getElementById("searchForm")
-        .addEventListener("submit", async function (event) {
-          event.preventDefault();
-          const loadingIndicator = document.getElementById("loading");
-        loadingIndicator.style.display = "block";
-          const formData = new FormData(this);
-    const jsonData = {};
-    formData.forEach((value, key) => {
-        jsonData[key] = value;
-    });
-    console.log("jsonData:", jsonData);
-          const responseData = await fetch("/searchForm", {
-            method: "POST",
-            body: JSON.stringify(jsonData),
-            headers: {
-        'Content-Type': 'application/json'
-    }
-          }).then((response) => response.json());
-          loadingIndicator.style.display = "none";
-          //console.log("response data:", responseData);
-          // Check if responseData is an array and has at least one element
-          const resultsBody = document.getElementById("results-body");
-    resultsBody.innerHTML = ""; // Clear previous results
-
-    if (Array.isArray(responseData) && responseData.length > 0) {
-        for (const row of responseData) {
-            resultsBody.innerHTML += `<tr>${row.map((value) => `<td>${value}</td>`).join("")}</tr>`;
-        }
-    } else {
-        resultsBody.innerHTML = '<tr><td colspan="100%">No results found</td></tr>';
-    }
-        });
-    </script>
-  </body>
+function populateFormFields(data) {
+    document.getElementById('SERIAL_NUMBER').value = data.SERIAL_NUMBER;
+    document.getElementById('ACCOUNT_NAME').value = data.ACCOUNT_NAME;
+    document.getElementById('PRIMARY_DBA').value = data.PRIMARY_DBA;
+    document.getElementById('BACKUP_DBA').value = data.BACKUP_DBA;
+    document.getElementById('CUST_SERVICE_PARTNER').value = data.CUST_SERVICE_PARTNER;
+    document.getElementById('TOM').value = data.TOM;
+    document.getElementById('LICENSE_OWNERSHIP_CUST_SVVS').value = data.LICENSE_OWNERSHIP_CUST_SVVS;
+    document.getElementById('CSI_IF_CUST_PROVIDED_LICENSE').value = data.CSI_IF_CUST_PROVIDED_LICENSE;
+    document.getElementById('CUS_POINT_OF_CONTACT_APPLICATION_OWNER').value = data.CUS_POINT_OF_CONTACT_APPLICATION_OWNER;
+    document.getElementById('LOGIN_PROCEDURE').value = data.LOGIN_PROCEDURE;
+    document.getElementById('SERVER_NAME').value = data.SERVER_NAME;
+    document.getElementById('IP_ADDRESS').value = data.IP_ADDRESS;
+    document.getElementById('LOC_IDC').value = data.LOC_IDC;
+    document.getElementById('OS_TYPE').value = data.OS_TYPE;
+    document.getElementById('INSTANCE').value = data.INSTANCE;
+    document.getElementById('DATABASE_NAME').value = data.DATABASE_NAME;
+    document.getElementById('PLUGGABLE').value = data.PLUGGABLE;
+    document.getElementById('DB_TYPE_DEV_PROD').value = data.DB_TYPE_DEV_PROD;
+    document.getElementById('DB_ROLE').value = data.DB_ROLE;
+    document.getElementById('IS_DB_DOWN').value = data.IS_DB_DOWN;
+    document.getElementById('LAST_UP_DOWN_DATE').value = data.LAST_UP_DOWN_DATE;
+    document.getElementById('PRIM_SERVER').value = data.PRIM_SERVER;
+    document.getElementById('PRIM_INST').value = data.PRIM_INST;
+    document.getElementById('INSTANCE_TYPE').value = data.INSTANCE_TYPE;
+    document.getElementById('DB_VERSION').value = data.DB_VERSION;
+    document.getElementById('DB_EDITION_SE_EE').value = data.DB_EDITION_SE_EE;
+    document.getElementById('GRID_INFO').value = data.GRID_INFO;
+    document.getElementById('FILESYSTEM_ASM_FILESYSTEM').value = data.FILESYSTEM_ASM_FILESYSTEM;
+    document.getElementById('DB_SIZE_MB_GB_TB').value = data.DB_SIZE_MB_GB_TB;
+    document.getElementById('DBID').value = data.DBID;
+    document.getElementById('OS_WATCHER').value = data.OS_WATCHER;
+    document.getElementById('BACKUP_TYPE').value = data.BACKUP_TYPE;
+    document.getElementById('BACKUP_TO_DISK_TAPE').value = data.BACKUP_TO_DISK_TAPE;
+    document.getElementById('BACKUP_LOCATION_POLICY_OR_NFS_SHARED_LOCATION').value = data.BACKUP_LOCATION_POLICY_OR_NFS_SHARED_LOCATION;
+    document.getElementById('BACKUP_SCRIPT_LOCATION').value = data.BACKUP_SCRIPT_LOCATION;
+    document.getElementById('BACKUP_LOG_LOCATION').value = data.BACKUP_LOG_LOCATION;
+    document.getElementById('BACKUP_SCHEDULED').value = data.BACKUP_SCHEDULED;
+    document.getElementById('CATALOG_Y_N').value = data.CATALOG_Y_N;
+    document.getElementById('CATALOG_DB_SERVER').value = data.CATALOG_DB_SERVER;
+    document.getElementById('CATALOG_USER').value = data.CATALOG_USER;
+    document.getElementById('FULL_BACKUP_DETAILS').value = data.FULL_BACKUP_DETAILS;
+    document.getElementById('INCREMENTAL_BACKUP_DETAILS').value = data.INCREMENTAL_BACKUP_DETAILS;
+    document.getElementById('ARCHIVE_BACKUP_DETAILS').value = data.ARCHIVE_BACKUP_DETAILS;
+    document.getElementById('MONITORED_BY').value = data.MONITORED_BY;
+    document.getElementById('LAST_AUDIT_DATE').value = data.LAST_AUDIT_DATE;
+    document.getElementById('LAST_AUDITED_BY').value = data.LAST_AUDITED_BY;
+}
+</script>
+    </body>
 </html>

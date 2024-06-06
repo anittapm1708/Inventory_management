@@ -20,17 +20,31 @@
 }
 .submit-btn{
     text-align:center;
+    
 }
 /* Style the submit button */
 .btn-submit {
   background-color: #007bff;
   color: #fff;
+  border:none;
 }
 
 .btn-submit:hover {
   background-color: #0056b3;
+  border:none;
 }
 
+
+.btn-search {
+  background-color: #05cf19;
+  border:none;
+  color: #fff;
+}
+
+.btn-search:hover {
+  border:none;
+  background-color: #47f158c4;
+}
 /* Optional: Add some padding to the body */
 body {
   padding-top: 20px;
