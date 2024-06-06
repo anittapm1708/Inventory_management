@@ -62,31 +62,32 @@ console.log(query);
   }
 });
 
+// 
 app.post("/searchForm", async (req, res) => {
-   const tableName = req.body.table;
-   console.log(tableName);
-   const jsonData=req.body;
-    console.log("Received JSON data:", jsonData);
-delete jsonData.table;
+  const tableName = req.body.table;
+  const jsonData = req.body;
+  delete jsonData.table;
+
   let query = `SELECT * FROM ${tableName} WHERE `;
-  const values = [];
-  console.log("Received JSON data:", jsonData);
+  const bindValues = {};
+
   for (const key in jsonData) {
     if (jsonData[key]) {
-      query += `${key} = :${key} AND `;
-      values.push(jsonData[key]);
+      query += `${key} LIKE :${key} AND `;
+      bindValues[key] = `%${jsonData[key]}%`; // Add wildcard characters for LIKE
     }
   }
   query = query.slice(0, -5); // Remove the last "AND "
   console.log("Query:", query);
+  console.log("Bind Values:", bindValues);
+
   try {
     const connection = await oracledb.getConnection(dbConfig);
-    const result = await connection.execute(query, values);
-    connection.close();
-    // Send a JSON response containing the fetched data
+    const result = await connection.execute(query, bindValues);
+    await connection.close();
 
     res.json(result.rows);
-    console.log("Data fetched:", result.rows);
+    //console.log("Data fetched:", result.rows);
   } catch (err) {
     console.error(err);
     res.status(500).send("Error fetching data");
@@ -231,6 +232,7 @@ app.post("/updateForm", async (req, res) => {
     //   alert("Record updated successfully");
   } catch (error) {
     console.error("Error updating data:", error);
+    
     res.sendStatus(500);
   }
 });
