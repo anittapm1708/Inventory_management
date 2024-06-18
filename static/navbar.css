@@ -1,0 +1,28 @@
+
+.navbar {
+    background-color: #1d3557;
+    overflow: hidden;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    color: black;
+}
+
+.navbar-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.home-icon i {
+    font-size: 20px;
+    margin-right: 8px; /* Add space between icon and text */
+}

@@ -46,6 +46,14 @@
   background-color: #47f158c4;
 }
 /* Optional: Add some padding to the body */
-body {
-  padding-top: 20px;
+
+.file-card{
+  display:flex;
+  border:3px dotted #000000;
+  padding:10px;
+  margin:auto;
+  align-items:center;
+  justify-content:center;
+  border-radius:10px;
+  flex-direction: column;
 }
