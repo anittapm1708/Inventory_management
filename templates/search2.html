@@ -11,7 +11,7 @@
     crossorigin="anonymous"
   />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="navbar.js" defer></script>
+  <script src="navbar.js" defer></script>
   <title>Inventory Management Web App</title>
   <style>
     .form-container {
@@ -24,9 +24,24 @@
       justify-content: center;
       margin-top: 20px; /* Adjust the margin as needed */
     }
+    .form-group-row {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    .form-group-row label {
+      flex: 0 0 10%; /* Adjust the width of the label */
+      margin-right: 1rem;
+    }
+    .form-group-row .form-control {
+      flex: 1;
+      width: auto; /* Allow the input field to adjust based on flexbox rules */
+    }
     .additional-field {
       display: flex;
       align-items: center;
+      width: 100%
     }
     .remove-field-button {
       margin-left: 10px;
@@ -44,108 +59,107 @@
         id="searchForm"
         action="/searchForm"
         method="POST"
-        class="form-group"
+        class="form-group w-100"
       >
         <input type="hidden" id="table" name="table" />
         <input type="hidden" id="fetchedData" name="fetchedData" />
-        <div class="row">
-          <div class="col-md-3 mb-3">
-            <label for="SERVER_NAME" class="form-label">Server Name</label>
-            <input
-              type="text"
-              class="form-control"
-              id="SERVER_NAME"
-              name="SERVER_NAME"
-            />
-          </div>
-          <div class="col-md-3 mb-3">
-            <label for="DATABASE_NAME" class="form-label">Database Name</label>
-            <input
-              type="text"
-              class="form-control"
-              id="DATABASE_NAME"
-              name="DATABASE_NAME"
-            />
-          </div>
-          <div class="col-md-3 mb-3">
-            <label for="INSTANCE" class="form-label">Instance Name</label>
-            <input
-              type="text"
-              class="form-control"
-              id="INSTANCE"
-              name="INSTANCE"
-            />
-          </div>
-          <div class="col-md-3 mb-3">
-            <label for="PRIMARY_DBA" class="form-label">Primary DBA</label>
-            <input
-              type="text"
-              class="form-control"
-              id="PRIMARY_DBA"
-              name="PRIMARY_DBA"
-            />
-          </div>
+
+        <div class="form-group-row">
+          <label for="SERVER_NAME" class="form-label">Server Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="SERVER_NAME"
+            name="SERVER_NAME"
+          />
+        </div>
+        <div class="form-group-row">
+          <label for="DATABASE_NAME" class="form-label">Database Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="DATABASE_NAME"
+            name="DATABASE_NAME"
+          />
+        </div>
+        <div class="form-group-row">
+          <label for="INSTANCE" class="form-label">Instance Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="INSTANCE"
+            name="INSTANCE"
+          />
+        </div>
+        <div class="form-group-row">
+          <label for="PRIMARY_DBA" class="form-label">Primary DBA</label>
+          <input
+            type="text"
+            class="form-control"
+            id="PRIMARY_DBA"
+            name="PRIMARY_DBA"
+          />
         </div>
 
-        <div class="row">
-          <div class="col-md-12 mb-3">
-            <label for="additionalFields" class="form-label">Additional Fields</label>
-            <select id="additionalFields" class="form-select">
-              <option value="">Select additional field</option>
-              <option value="BACKUP_DBA">Backup DBA</option>
-              <option value="CUST_SERVICE_PARTNER">Customer Service Partner</option>
-              <option value="TOM">TOM</option>
-              <option value="LICENSE_OWNERSHIP_CUST_SVVS">License Ownership Cust Svvs</option>
-              <option value="CSI_IF_CUST_PROVIDED_LICENSE">CSI If Cust Provided License</option>
-              <option value="CUS_POINT_OF_CONTACT_APPLICATION_OWNER">CUS Point of Contact Application Owner</option>
-              <option value="LOGIN_PROCEDURE">Login Procedure</option>
-              <option value="IP_ADDRESS">IP Address</option>
-              <option value="LOC_IDC">LOC IDC</option>
-              <option value="OS_TYPE">OS Type</option>
-              <option value="PLUGGABLE">Pluggable</option>
-              <option value="DB_TYPE_DEV_PROD">DB Type Dev Prod</option>
-              <option value="DB_ROLE">DB Role</option>
-              <option value="IS_DB_DOWN">Is DB Down</option>
-              <option value="LAST_UP_DOWN_DATE">Last Up Down Date</option>
-              <option value="PRIM_SERVER">Primary Server</option>
-              <option value="PRIM_INST">Primary Instance</option>
-              <option value="INSTANCE_TYPE">Instance Type</option>
-              <option value="DB_VERSION">DB Version</option>
-              <option value="DB_EDITION_SE_EE">DB Edition SE EE</option>
-              <option value="GRID_INFO">Grid Info</option>
-              <option value="FILESYSTEM_ASM_FILESYSTEM">Filesystem ASM Filesystem</option>
-              <option value="DB_SIZE_MB_GB_TB">DB Size MB GB TB</option>
-              <option value="DBID">DBID</option>
-              <option value="OS_WATCHER">OS Watcher</option>
-              <option value="BACKUP_TYPE">Backup Type</option>
-              <option value="BACKUP_TO_DISK_TAPE">Backup to Disk Tape</option>
-              <option value="BACKUP_LOCATION_POLICY_OR_NFS_SHARED_LOCATION">Backup Location Policy or NFS Shared Location</option>
-              <option value="BACKUP_SCRIPT_LOCATION">Backup Script Location</option>
-              <option value="BACKUP_LOG_LOCATION">Backup Log Location</option>
-              <option value="BACKUP_SCHEDULED">Backup Scheduled</option>
-              <option value="CATALOG_Y_N">Catalog Y N</option>
-              <option value="CATALOG_DB_SERVER">Catalog DB Server</option>
-              <option value="CATALOG_USER">Catalog User</option>
-              <option value="FULL_BACKUP_DETAILS">Full Backup Details</option>
-              <option value="INCREMENTAL_BACKUP_DETAILS">Incremental Backup Details</option>
-              <option value="ARCHIVE_BACKUP_DETAILS">Archive Backup Details</option>
-              <option value="MONITORED_BY">Monitored By</option>
-              <option value="LAST_AUDIT_DATE">Last Audit Date</option>
-              <option value="LAST_AUDITED_BY">Last Audited By</option>
-            </select>
-            <button type="button" class="btn btn-secondary mt-2" id="addFieldButton">Add Field</button>
+        <div class="form-group-row">
+          <label for="additionalFields" class="form-label">Additional Fields</label>
+          <select id="additionalFields" class="form-select">
+            <option value="">Select additional field</option>
+            <option value="BACKUP_DBA">Backup DBA</option>
+            <option value="CUST_SERVICE_PARTNER">Customer Service Partner</option>
+            <option value="TOM">TOM</option>
+            <option value="LICENSE_OWNERSHIP_CUST_SVVS">License Ownership Cust Svvs</option>
+            <option value="CSI_IF_CUST_PROVIDED_LICENSE">CSI If Cust Provided License</option>
+            <option value="CUS_POINT_OF_CONTACT_APPLICATION_OWNER">CUS Point of Contact Application Owner</option>
+            <option value="LOGIN_PROCEDURE">Login Procedure</option>
+            <option value="IP_ADDRESS">IP Address</option>
+            <option value="LOC_IDC">LOC IDC</option>
+            <option value="OS_TYPE">OS Type</option>
+            <option value="PLUGGABLE">Pluggable</option>
+            <option value="DB_TYPE_DEV_PROD">DB Type Dev Prod</option>
+            <option value="DB_ROLE">DB Role</option>
+            <option value="IS_DB_DOWN">Is DB Down</option>
+            <option value="LAST_UP_DOWN_DATE">Last Up Down Date</option>
+            <option value="PRIM_SERVER">Primary Server</option>
+            <option value="PRIM_INST">Primary Instance</option>
+            <option value="INSTANCE_TYPE">Instance Type</option>
+            <option value="DB_VERSION">DB Version</option>
+            <option value="DB_EDITION_SE_EE">DB Edition SE EE</option>
+            <option value="GRID_INFO">Grid Info</option>
+            <option value="FILESYSTEM_ASM_FILESYSTEM">Filesystem ASM Filesystem</option>
+            <option value="DB_SIZE_MB_GB_TB">DB Size MB GB TB</option>
+            <option value="DBID">DBID</option>
+            <option value="OS_WATCHER">OS Watcher</option>
+            <option value="BACKUP_TYPE">Backup Type</option>
+            <option value="BACKUP_TO_DISK_TAPE">Backup to Disk Tape</option>
+            <option value="BACKUP_LOCATION_POLICY_OR_NFS_SHARED_LOCATION">Backup Location Policy or NFS Shared Location</option>
+            <option value="BACKUP_SCRIPT_LOCATION">Backup Script Location</option>
+            <option value="BACKUP_LOG_LOCATION">Backup Log Location</option>
+            <option value="BACKUP_SCHEDULED">Backup Scheduled</option>
+            <option value="CATALOG_Y_N">Catalog Y N</option>
+            <option value="CATALOG_DB_SERVER">Catalog DB Server</option>
+            <option value="CATALOG_USER">Catalog User</option>
+            <option value="FULL_BACKUP_DETAILS">Full Backup Details</option>
+            <option value="INCREMENTAL_BACKUP_DETAILS">Incremental Backup Details</option>
+            <option value="ARCHIVE_BACKUP_DETAILS">Archive Backup Details</option>
+            <option value="MONITORED_BY">Monitored By</option>
+            <option value="LAST_AUDIT_DATE">Last Audit Date</option>
+            <option value="LAST_AUDITED_BY">Last Audited By</option>
+          </select>
+          <button type="button" class="btn btn-secondary mt-2" id="addFieldButton">Add Field</button>
+        </div>
+
+        <div id="additionalFieldsContainer"></div>
+
+        <div class="button-container">
+          <div class="submit-btn">
+            <button type="submit" class="btn btn-primary">Search</button>
           </div>
-        </div>
-
-        <div id="additionalFieldsContainer" class="row"></div>
-
-        <div class="submit-btn">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-        <div class="export-btn mt-3">
-          <button type="button" id="exportButton" class="btn btn-success">
-            Export as Excel
-          </button>
+          <div class="export-btn">
+            <button type="button" id="exportButton" class="btn btn-success">
+              Export as Excel
+            </button>
+          </div>
         </div>
       </form>
     </div>
@@ -291,9 +305,18 @@
       const selectedField = additionalFields.value;
 
       if (selectedField) {
+        // Check if the field is already added
+        const existingFields = document.querySelectorAll("#additionalFieldsContainer .form-label");
+        for (let i = 0; i < existingFields.length; i++) {
+          if (existingFields[i].getAttribute("for") === selectedField) {
+            alert("Field is already added.");
+            return;
+          }
+        }
+
         const fieldLabel = additionalFields.options[additionalFields.selectedIndex].text;
         const container = document.createElement("div");
-        container.className = "col-md-3 mb-3 additional-field";
+        container.className = "form-group-row w-100 additional-field";
 
         const label = document.createElement("label");
         label.className = "form-label";

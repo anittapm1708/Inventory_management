@@ -1,28 +1,46 @@
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  margin: 0;
+  padding: 0;
+}
 
 .form-container {
-width:100%;
+  width: 100%;
   margin: auto;
-  padding:20px;
+  padding: 20px;
   background-color: rgba(209, 209, 202, 0.255);
-  border-radius:10px;
-  font-size:0.8rem;
+  border-radius: 10px;
+  font-size: 1rem; /* Adjust the font size for the entire form */
 }
 
-.form-control {
-    width: 30px; /* Set the width as needed */
-    font-size:0.7rem;
-    height:20px;
+.form-group-row {
+  display: flex;
+  align-items: center;
+  width: 0%;
+  margin-bottom: 1rem;
+  /* margin-left: 5rem; */
 }
 
-.row{
-    justify-content: space-between;
-    align-items: center;
-
+.form-group-row label {
+  flex: 0 0 20%; /* Adjust the width of the label */
+  margin-right: 1rem;
 }
 
-.submit-btn{
-    text-align:center;
+.form-group-row .form-control {
+  flex: 1; /* Adjust the width of the input field */
+  width: auto; /* Allow the input field to adjust based on flexbox rules */
+  font-size: 1rem; /* Maintain the font size */
+  height: 2.5em; /* Adjust the height proportionally */
 }
+
+.submit-btn {
+  text-align: center;
+}
+
 /* Style the submit button */
 .btn-submit {
   background-color: #007bff;
@@ -38,42 +56,39 @@ body {
   padding-top: 20px;
 }
 
-
-.search-table{
+.search-table {
   overflow-x: auto;
 }
+
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
 th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
 }
 
 th {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 
 tr:hover {
-    background-color: #ddd;
+  background-color: #ddd;
 }
-
-
 
 .search-table {
   position: relative;
   overflow-x: auto;
   overflow-y: auto;
   white-space: nowrap;
-  /* Adjust the height of the scrollbar */
   max-height: 600px; /* Example height */
   min-height: 0px;
 }
@@ -105,4 +120,40 @@ tr:hover {
 .search-table::before::-webkit-scrollbar-thumb,
 .search-table::after::-webkit-scrollbar-thumb {
   background-color: #4caf50; /* Scrollbar thumb color */
+}
+
+#additionalFields {
+  font-size: 1rem; /* Maintain the size for the select element */
+  width:80%;
+  height: auto;
+}
+
+#additionalFields option {
+  font-size: 1.25rem; /* Increase the size for the options */
+}
+
+#addFieldButton {
+  margin-left: 10px; /* Adjust the value as needed */
+  margin-bottom: 5px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Ensure buttons are aligned vertically */
+  gap: 30px; /* Adjust the gap as needed */
+}
+
+.submit-btn, .export-btn {
+  margin: 0;
+  padding: 0;
+}
+
+button.btn {
+  height: 40px; /* Adjust the height as needed */
+  line-height: 1.5; /* Adjust line height to vertically center text */
+}
+
+#exportButton {
+  margin-top: -20px; /* Adjust the value as needed to align the buttons */
 }

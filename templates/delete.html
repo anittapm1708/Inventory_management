@@ -346,7 +346,6 @@
                 });
         }
 
-
         function populateFormFields(data) {
             document.getElementById('SERIAL_NUMBER').value = data.SERIAL_NUMBER;
             document.getElementById('ACCOUNT_NAME').value = data.ACCOUNT_NAME;
@@ -399,27 +398,32 @@
         function deleteData() {
             event.preventDefault();
             const serial_no = document.getElementById('SERIAL_NUMBER').value;
-            console.log('serial no to delete:', serial_no); // Log the incident ID
-            fetch(`/deleteData/${serial_no}`, { // Corrected URL string
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ SERIAL_NUMBER: serial_no })
-            })
-                .then(response => {
-                    if (response.ok) {
-                        console.log('Data deleted successfully.');
-                        // Show pop-up message
-                        alert('Record deleted successfully!!!');
-                    } else {
-                        console.error('Error deleting data.');
-                        alert('Error Deleting Data!!!!');
-                    }
+            const confirmation = confirm(`Are you sure you want to delete the record with Serial Number: ${serial_no}? This action will also archive the record.`);
+
+            if (confirmation) {
+                console.log('serial no to delete:', serial_no); // Log the incident ID
+                fetch(`/deleteData/${serial_no}`, { // Corrected URL string
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ SERIAL_NUMBER: serial_no })
                 })
-                .catch(error => console.error('Error deleting data:', error));
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Data deleted successfully.');
+                            // Show pop-up message
+                            alert('Record deleted successfully!!!');
+                        } else {
+                            console.error('Error deleting data.');
+                            alert('Error Deleting Data!!!!');
+                        }
+                    })
+                    .catch(error => console.error('Error deleting data:', error));
+            }
         }
     </script>
+    <h3>NOTE : Deletion requires serial number!!</h3>
 </body>
 
 </html>
