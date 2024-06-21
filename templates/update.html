@@ -315,9 +315,9 @@
                         </div>
                     </div>
                     <div class="submit-btn">
-                        <button class="btn-search" id="searchButton" onclick="fetchData()">Search</button>
-                        <button class="btn-submit" type="submit" onclick="updateData()">Update Data</button>
-                    </div>
+                        <button class="btn-search btn-common" id="searchButton" onclick="fetchData()">Search</button>
+                        <button class="btn-submit btn-common" type="submit" onclick="updateData()">Update Data</button>
+                      </div>
                 </div>
 
             </form>
@@ -425,6 +425,8 @@
                 .catch(error => console.error('Error updating data:', error));
         }
     </script>
+    <h3>NOTE : Updating requires serial number!!</h3>
+
 </body>
 
 </html>

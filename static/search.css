@@ -1,6 +1,7 @@
 body, html {
   margin: 0;
   padding: 0;
+  font-size: largest;
 }
 
 header {
@@ -14,7 +15,7 @@ header {
   padding: 20px;
   background-color: rgba(209, 209, 202, 0.255);
   border-radius: 10px;
-  font-size: 1rem; /* Adjust the font size for the entire form */
+  font-size: 18px; /* Adjust the font size for the entire form */
 }
 
 .form-group-row {
@@ -43,7 +44,7 @@ header {
 
 /* Style the submit button */
 .btn-submit {
-  background-color: #007bff;
+  background-color: #0056b3;
   color: #fff;
 }
 
@@ -135,6 +136,7 @@ tr:hover {
 #addFieldButton {
   margin-left: 10px; /* Adjust the value as needed */
   margin-bottom: 5px;
+  transition: background-color 0.3s, transform 0.3s; /* Add smooth transition for background-color and transform */
 }
 
 .button-container {
@@ -155,5 +157,68 @@ button.btn {
 }
 
 #exportButton {
-  margin-top: -20px; /* Adjust the value as needed to align the buttons */
+  margin-top: -20px;
 }
+
+button.btn.btn-primary {
+  background-color: #457b9d; /* Change the background color */
+  color: #fff; /* Change the text color */
+  border: none;
+  padding: 15px 30px; /* Increase padding for a bigger button */
+  font-size: 18px; /* Increase font size */
+  border-radius: 5px; /* Add rounded edges */
+  line-height: 1.5; /* Adjust line height to vertically center text */
+  display: inline-flex; /* Use inline-flex to center text vertically */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  transition: background-color 0.3s, transform 0.3s; /* Add smooth transition for background-color and transform */
+}
+
+button.btn.btn-primary:hover {
+  background-color: #1d3557; /* Change hover background color */
+  transform: scale(1.05); /* Slightly scale up the button on hover */
+  border: none;
+}
+
+button.btn.btn-success {
+  background-color: #457b9d; /* Change the background color */
+  color: #fff; /* Change the text color */
+  border: none;
+  padding: 15px 30px; /* Increase padding for a bigger button */
+  font-size: 17px; /* Increase font size */
+  border-radius: 5px; /* Add rounded edges */
+  line-height: 1.5; /* Adjust line height to vertically center text */
+  display: inline-flex; /* Use inline-flex to center text vertically */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  transition: background-color 0.3s, transform 0.3s; /* Add smooth transition for background-color and transform */
+}
+
+button.btn.btn-success:hover {
+  background-color: #1d3557; /* Change hover background color */
+  transform: scale(1.05); /* Slightly scale up the button on hover */
+  border: none;
+}
+#addFieldButton {
+  background-color: #457b9d; /* Change the background color */
+  color: #fff; /* Change the text color */
+  border: none;
+  padding: 10px 30px; /* Adjust padding for a bigger button */
+  font-size: 18px; /* Increase font size */
+  border-radius: 10px; /* Add rounded edges */
+  line-height: 1.5; /* Adjust line height to vertically center text */
+  display: inline-flex; /* Use inline-flex to center text vertically */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  transition: background-color 0.3s, transform 0.3s; /* Add smooth transition for background-color and transform */
+  margin-left: 10px; /* Adjust the margin as needed */
+  margin-bottom: 5px;
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+#addFieldButton:hover {
+  background-color: #1d3557; /* Change hover background color */
+  transform: scale(1.05); /* Slightly scale up the button on hover */
+  border: none;
+}
+

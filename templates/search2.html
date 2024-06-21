@@ -105,6 +105,7 @@
           <label for="additionalFields" class="form-label">Additional Fields</label>
           <select id="additionalFields" class="form-select">
             <option value="">Select additional field</option>
+            <option value="SERIAL_NUMBER">Serial Number</option> <!-- Added Serial Number here -->
             <option value="BACKUP_DBA">Backup DBA</option>
             <option value="CUST_SERVICE_PARTNER">Customer Service Partner</option>
             <option value="TOM">TOM</option>
@@ -219,6 +220,7 @@
         <tbody id="results-body"></tbody>
         <!-- Results will be displayed here -->
       </table>
+      <h4 id="rowCount" class="text-center mt-4"></h4> <!-- Add this line -->
     </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.2.1/exceljs.min.js"></script>
@@ -276,6 +278,10 @@
       } else {
         resultsBody.innerHTML = '<tr><td colspan="100%">No results found</td></tr>';
       }
+
+      // Display the total number of rows fetched
+      const rowCount = responseData.length;
+      document.getElementById("rowCount").innerText = `Total rows fetched: ${rowCount}`;
     });
 
     // Export results as Excel file

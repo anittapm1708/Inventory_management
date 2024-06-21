@@ -23,16 +23,16 @@
     
 }
 /* Style the submit button */
-.btn-submit {
+/* .btn-submit {
   background-color: #007bff;
   color: #fff;
   border:none;
-}
+} */
 
-.btn-submit:hover {
+/* .btn-submit:hover {
   background-color: #0056b3;
   border:none;
-}
+} */
 
 
 .btn-search {
@@ -57,3 +57,53 @@
   border-radius:10px;
   flex-direction: column;
 }
+/* Style the submit button */
+.btn-submit {
+  background-color: #457b9d; /* Change background color */
+  color: #fff;
+  border: none;
+  padding: 15px 30px; /* Increase padding for bigger button */
+  font-size: 18px; /* Increase font size */
+  border-radius: 10px; /* Add rounded edges */
+  transition: background-color 0.3s, transform 0.3s; /* Add smooth transition for background-color and transform */
+}
+
+.btn-submit:hover {
+  background-color: #1d3557; /* Change hover background color */
+  transform: scale(1.05); /* Slightly scale up the button on hover */
+  border: none;
+}
+
+/* Common button styles */
+.btn-common {
+  background-color: #457b9d; /* Change the background color */
+  color: #fff; /* Change the text color */
+  border: none;
+  padding: 10px 30px; /* Adjust padding for a bigger button */
+  font-size: 18px; /* Increase font size */
+  border-radius: 10px; /* Add rounded edges */
+  line-height: 1.5; /* Adjust line height to vertically center text */
+  display: inline-flex; /* Use inline-flex to center text vertically */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  transition: background-color 0.3s, transform 0.3s; /* Add smooth transition for background-color and transform */
+  margin-left: 10px; /* Adjust the margin as needed */
+  margin-bottom: 5px;
+  white-space: nowrap; /* Prevent text from wrapping */
+  margin-right: 10px; /* Add margin to increase gap between buttons */
+  /* margin-left: 10px; */
+  justify-content: center; /* Center items horizontally */
+}
+
+.btn-common:hover {
+  background-color: #1d3557; /* Change hover background color */
+  transform: scale(1.05); /* Slightly scale up the button on hover */
+  border: none;
+}
+
+h3 {
+  text-align: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+

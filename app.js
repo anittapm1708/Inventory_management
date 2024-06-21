@@ -29,9 +29,9 @@ app.use(express.json());
 
 // Database connection configuration
 const dbConfig = {
-  user: "test",
-  password: "test123",
-  connectString: "192.168.1.10/FREEPDB1",
+  user: "inventory",
+  password: "inventory123",
+  connectString: "192.168.0.100/FREEPDB1",
 };
 
 // Serve the index.html file

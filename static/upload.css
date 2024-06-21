@@ -1,0 +1,66 @@
+/* Center the form */
+.form-contain {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+    background-color: rgba(209, 209, 202, 0.255);
+    border-radius: 20px;
+}
+
+/* Card styles */
+.card {
+    font-size: 1.5rem; /* Increase font size for card content */
+    border-radius: 5px;
+}
+
+.card-title {
+    font-size: 2rem; /* Increase font size for card title */
+}
+
+.card-body {
+    background-color: #c0e4fa;
+}
+
+/* Style the upload button */
+.btn-submit {
+    background-color: #1d3557; /* Change background color */
+    color: #fff;
+    border: none;
+    padding: 15px 30px; /* Increase padding for bigger button */
+    font-size: 1.5rem; /* Increase font size */
+    border-radius: 10px; /* Add rounded edges */
+    transition: background-color 0.3s, transform 0.3s; /* Add smooth transition for background-color and transform */
+}
+
+.btn-submit:hover {
+    background-color: #457b9d; /* Change hover background color */
+    transform: scale(1.02); /* Slightly scale up the button on hover */
+    border: none;
+}
+
+.form-control-file {
+    display: none; /* Hide the actual file input */
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #1d3557; /* Custom button background color */
+    color: #fff; /* Custom button text color */
+    border-radius: 10px; /* Make the button round */
+    font-size: 1.25rem; /* Adjust font size as needed */
+    transition: background-color 0.3s, transform 0.3s; /* Add smooth transition for background-color and transform */
+}
+
+.custom-file-upload:hover {
+    background-color: #457b9d; /* Change hover background color */
+    transform: scale(1.02); /* Slightly scale up the button on hover */
+    border: none;
+}
+
+.file-chosen {
+    font-size: 1.25rem; /* Adjust as needed */
+    color: #000; /* Default color for the file chosen text */
+    margin-top: 10px; /* Space above the file chosen text */
+}
