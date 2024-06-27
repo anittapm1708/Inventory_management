@@ -20,7 +20,8 @@
             <form id="myForm" method="POST" action="/updateForm">
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="SERIAL_NUMBER" class="form-label">Serial Number <span class="text-danger">*</span></label>
+                        <label for="SERIAL_NUMBER" class="form-label">Serial Number <span
+                                class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="SERIAL_NUMBER" name="SERIAL_NUMBER" required />
                     </div>
 
@@ -316,7 +317,7 @@
                     <div class="submit-btn">
                         <button class="btn-search btn-common" id="searchButton" onclick="fetchData()">Search</button>
                         <button class="btn-submit btn-common" type="submit" onclick="updateData()">Update Data</button>
-                      </div>
+                    </div>
                 </div>
 
             </form>
@@ -324,26 +325,21 @@
         </div>
     </div>
     <script>
-        // Get the table value from the URL
-        //<!-- const urlParams = new URLSearchParams(window.location.search);
-        //const table = urlParams.get('table');
-
-        // Set the action attribute of the form to include the table value
-        //document.getElementById('myForm').action = `/updateForm?TABLE_NAME=${table}`; -->
-
         function fetchData() {
-            event.preventDefault();
-            const serial_no = document.getElementById('SERIAL_NUMBER').value;
-            fetch(`/fetchData/${serial_no}`) // Assuming you have an endpoint to fetch data based on the incident ID
-                .then(response => response.json())
-                .then(data => {
-                    populateFormFields(data);
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    alert("Record not found");
-                });
-        }
+                event.preventDefault();
+                const urlParams = new URLSearchParams(window.location.search);
+                const table = urlParams.get('table');
+                const serial_no = document.getElementById('SERIAL_NUMBER').value;
+                fetch(`/fetchData/${table}/${serial_no}`) // Assuming you have an endpoint to fetch data based on the incident ID
+                    .then(response => response.json())
+                    .then(data => {
+                        populateFormFields(data);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                        alert("Record not found");
+                    });
+            }
 
 
         function populateFormFields(data) {
@@ -394,50 +390,46 @@
             document.getElementById('LAST_AUDIT_DATE').value = data.LAST_AUDIT_DATE;
             document.getElementById('LAST_AUDITED_BY').value = data.LAST_AUDITED_BY;
         }
-        document.getElementById('SERIAL_NUMBER').addEventListener('blur', function() {
-    if (!this.value.trim()) {
-        alert('Serial number is a mandatory field!');
-    }
-});
-
-function updateData() {
-    event.preventDefault();
-
-    const serialNumber = document.getElementById('SERIAL_NUMBER').value.trim();
-
-    if (!serialNumber) {
-        alert('Serial number is required for updating the table!');
-        return;
-    }
-
-    // Collect form data
-    const formData = new FormData(document.getElementById('myForm'));
-    const data = {};
-    formData.forEach((value, key) => {
-        data[key] = value;
-    });
-
-    // Send data to the server
-    fetch(`/updateForm`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-        .then(response => {
-            if (response.ok) {
-                console.log('Data updated successfully.');
-                alert('Record updated successfully!!!');
-            } else {
-                console.error('Error updating data.');
-                alert('Error updating Data!!!!');
+        document.getElementById('SERIAL_NUMBER').addEventListener('blur', function () {
+            if (!this.value.trim()) {
+                alert('Serial number is a mandatory field!');
             }
+        });
+    function updateData() {
+        event.preventDefault();
+        const urlParams = new URLSearchParams(window.location.search);
+        const table = urlParams.get('table');
+        console.log('Table name from URL in updateData:', table);
+        // Ensure the table name is included in the form action
+        const form = document.getElementById('myForm');
+        form.action = `/updateForm?TABLE_NAME=${table}`;
+
+        // Collect form data
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        // Send data to the server
+        fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
         })
-        .catch(error => console.error('Error updating data:', error));
-}
-
-
+            .then(response => {
+                if (response.ok) {
+                    console.log('Data updated successfully.');
+                    alert('Record updated successfully!!!');
+                } else {
+                    console.error('Error updating data.');
+                    alert('Error updating Data!!!!');
+                }
+            })
+            .catch(error => console.error('Error updating data:', error));
+    }
     </script>
 </body>
 

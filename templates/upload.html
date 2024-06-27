@@ -52,6 +52,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             const fileInput = document.getElementById('csvfile');
             const fileChosen = document.getElementById('fileChosen');
+            const urlParams = new URLSearchParams(window.location.search);
+            const tableName = urlParams.get('table');
+            const messageElement = document.getElementById('message');
 
             fileInput.addEventListener('change', function() {
                 if (fileInput.files.length > 0) {
@@ -65,7 +68,6 @@
                 event.preventDefault();
 
                 const file = fileInput.files[0];
-                const messageElement = document.getElementById('message');
 
                 if (!file) {
                     messageElement.textContent = 'Please select a file.';
@@ -77,7 +79,7 @@
                 formData.append('csvfile', file);
 
                 try {
-                    const response = await fetch('/uploadData', {
+                    const response = await fetch(`/uploadData?table=${tableName}`, {
                         method: 'POST',
                         body: formData,
                     });

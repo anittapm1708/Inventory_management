@@ -26,10 +26,15 @@ app.use(express.json());
 // app.set('view engine', 'ejs');
 
 // Database connection configuration
+// const dbConfig = {
+//   user: "inventory",
+//   password: "inventory123",
+//   connectString: "192.168.0.100/FREEPDB1",
+// };
 const dbConfig = {
-  user: "inventory",
-  password: "inventory123",
-  connectString: "192.168.0.100/FREEPDB1",
+  user: "test",
+  password: "test123",
+  connectString: "192.168.1.5/FREEPDB1",
 };
 
 app.get("/", (req, res) => {
@@ -48,7 +53,7 @@ app.get("/updateForm", (req, res) => {
   res.sendFile(path.join(__dirname, "/templates/update.html"));
 });
 app.get("/searchForm", (req, res) => {
-  res.sendFile(path.join(__dirname, "/templates/search2.html"));
+  res.sendFile(path.join(__dirname, "/templates/search.html"));
 });
 
 app.get("/uploadForm", (req, res) => {
@@ -168,7 +173,7 @@ app.post("/searchForm", async (req, res) => {
   for (const key in jsonData) {
     if (jsonData[key]) {
       query += `${key} LIKE :${key} AND `;
-      bindValues[key] = `%${jsonData[key]}%`; 
+      bindValues[key] = `%${jsonData[key]}%`;
     }
   }
   query = query.slice(0, -5); // Remove the last "AND "
@@ -188,17 +193,20 @@ app.post("/searchForm", async (req, res) => {
   }
 });
 
-app.get("/fetchData/:serial_no", async (req, res) => {
+app.get("/fetchData/:tableName/:serial_no", async (req, res) => {
+  //const data = req.body;
+  const tableName = req.params.tableName;
+  
   const serial_no = req.params.serial_no;
   try {
     const connection = await oracledb.getConnection(dbConfig);
     const result = await connection.execute(
-      `SELECT * FROM arterra WHERE serial_number = :serial_no`,
+      `SELECT * FROM ${tableName} WHERE serial_number = :serial_no`,
       [serial_no],
       { outFormat: oracledb.OUT_FORMAT_OBJECT }
     );
     res.json(result.rows[0]);
-    console.log("Data fetched:", result.rows[0]);
+    //console.log("Data fetched:", result.rows[0]);
   } catch (error) {
     console.error("Error fetching data:", error);
     res.sendStatus(500);
@@ -207,17 +215,20 @@ app.get("/fetchData/:serial_no", async (req, res) => {
 
 app.post("/updateForm", async (req, res) => {
   const data = req.body; // Extract data from request body
+  const tableName = req.query.TABLE_NAME;
+  console.log(tableName);
   console.log("Received data at server:", data);
   let connection;
 
   try {
     connection = await oracledb.getConnection(dbConfig); // Establish database connection
 
+    // Begin transaction
     await connection.execute("BEGIN NULL; END;");
 
-    
+
     const updateQuery = `
-      UPDATE arterra
+      UPDATE ${tableName}
       SET
           ACCOUNT_NAME = :ACCOUNT_NAME,
           PRIMARY_DBA = :PRIMARY_DBA,
@@ -319,11 +330,13 @@ app.post("/updateForm", async (req, res) => {
       LAST_AUDIT_DATE: data.LAST_AUDIT_DATE,
       LAST_AUDITED_BY: data.LAST_AUDITED_BY,
     };
-
+    console.log(updateQuery);
+    // Execute the update query
     const result = await connection.execute(updateQuery, binds, {
       autoCommit: false,
     });
 
+    // Commit the transaction
     await connection.commit();
 
     console.log("Data updated:", result.rowsAffected);
@@ -331,6 +344,7 @@ app.post("/updateForm", async (req, res) => {
   } catch (error) {
     console.error("Error updating data:", error);
 
+    // Rollback the transaction in case of an error
     if (connection) {
       try {
         await connection.rollback();
@@ -341,6 +355,7 @@ app.post("/updateForm", async (req, res) => {
 
     res.sendStatus(500);
   } finally {
+    // Always close the connection
     if (connection) {
       try {
         await connection.close();
@@ -353,23 +368,29 @@ app.post("/updateForm", async (req, res) => {
 
 app.post("/deleteData/:serial_no", async (req, res) => {
   const serial_no = req.params.serial_no; // Extract serial number from route parameter
+  const tableName = req.query.TABLE_NAME;
+  console.log(tableName);
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig); // Establish database connection
 
+    // Begin transaction
     await connection.execute('BEGIN NULL; END;');
 
+    // Archive the record before deletion
     const archiveQuery = `
-      INSERT INTO archive_arterra
-      SELECT * FROM arterra WHERE SERIAL_NUMBER = :serial_no
+      INSERT INTO archive_table
+      SELECT * FROM ${tableName} WHERE SERIAL_NUMBER = :serial_no
     `;
     await connection.execute(archiveQuery, [serial_no]);
 
+    // Delete the record
     const deleteQuery = `
-      DELETE FROM arterra WHERE SERIAL_NUMBER = :serial_no
+      DELETE FROM ${tableName} WHERE SERIAL_NUMBER = :serial_no
     `;
     const result = await connection.execute(deleteQuery, [serial_no], { autoCommit: false });
 
+    // Commit the transaction
     await connection.commit();
 
     console.log("Data archived and deleted:", result.rowsAffected);
@@ -377,6 +398,7 @@ app.post("/deleteData/:serial_no", async (req, res) => {
   } catch (error) {
     console.error("Error deleting data:", error);
 
+    // Rollback the transaction in case of an error
     if (connection) {
       try {
         await connection.rollback();
@@ -387,6 +409,7 @@ app.post("/deleteData/:serial_no", async (req, res) => {
 
     res.sendStatus(500);
   } finally {
+    // Always close the connection
     if (connection) {
       try {
         await connection.close();
@@ -401,8 +424,9 @@ app.post("/deleteData/:serial_no", async (req, res) => {
 const upload = multer({ dest: "uploads/" });
 
 app.post("/uploadData", upload.single("csvfile"), async (req, res) => {
-  if (!req.file) {
+  const tableName = req.query.table;
 
+  if (!req.file) {
     return res.status(400).json({ message: "No file uploaded." });
   }
 
@@ -414,7 +438,7 @@ app.post("/uploadData", upload.single("csvfile"), async (req, res) => {
     .on("data", (data) => results.push(data))
     .on("end", async () => {
       try {
-        const rowsInserted = await insertIntoOracle(results);
+        const rowsInserted = await insertIntoOracle(results, tableName);
         fs.unlinkSync(csvFilePath);
         res
           .status(200)
@@ -429,17 +453,15 @@ app.post("/uploadData", upload.single("csvfile"), async (req, res) => {
           .json({ message: "Error inserting data into OracleDB." });
       }
     });
-
-  
 });
 
-async function insertIntoOracle(data) {
+async function insertIntoOracle(data, tableName) {
   let connection;
 
   try {
     connection = await oracledb.getConnection(dbConfig);
 
-    const sql = generateInsertSQL(data[0]); // Assuming data[0] has headers
+    const sql = generateInsertSQL(data[0], tableName); // Assuming data[0] has headers
     const binds = data.map((row) => Object.values(row));
 
     const options = { autoCommit: true, bindDefs: getBindDefs(data[0]) };
@@ -460,8 +482,7 @@ async function insertIntoOracle(data) {
   }
 }
 
-function generateInsertSQL(headerRow) {
-  const tableName = "arterra";
+function generateInsertSQL(headerRow, tableName) {
   const columns = Object.keys(headerRow).join(", ");
   const values = Object.keys(headerRow)
     .map((key, index) => `:${index + 1}`)
@@ -471,18 +492,98 @@ function generateInsertSQL(headerRow) {
 }
 
 function getBindDefs(headerRow) {
-  return Object.values(headerRow).map((value) => ({
+  return Object.values(headerRow).map(() => ({
     type: oracledb.STRING,
     maxSize: 255,
   }));
 }
+
+// app.post("/uploadData", upload.single("csvfile"), async (req, res) => {
+//   if (!req.file) {
+
+//     return res.status(400).json({ message: "No file uploaded." });
+//   }
+
+//   const csvFilePath = path.join(__dirname, req.file.path);
+//   const results = [];
+
+//   fs.createReadStream(csvFilePath)
+//     .pipe(csvParser())
+//     .on("data", (data) => results.push(data))
+//     .on("end", async () => {
+//       try {
+//         const rowsInserted = await insertIntoOracle(results);
+//         fs.unlinkSync(csvFilePath);
+//         res
+//           .status(200)
+//           .json({
+//             message: "Data inserted into OracleDB successfully.",
+//             rowsInserted,
+//           });
+//       } catch (err) {
+//         console.error("Error inserting data:", err);
+//         res
+//           .status(500)
+//           .json({ message: "Error inserting data into OracleDB." });
+//       }
+//     });
+
+
+// });
+
+// async function insertIntoOracle(data) {
+//   let connection;
+
+//   try {
+//     connection = await oracledb.getConnection(dbConfig);
+
+//     const sql = generateInsertSQL(data[0]); // Assuming data[0] has headers
+//     const binds = data.map((row) => Object.values(row));
+
+//     const options = { autoCommit: true, bindDefs: getBindDefs(data[0]) };
+//     const result = await connection.executeMany(sql, binds, options);
+
+//     console.log("Rows inserted:", result.rowsAffected);
+//     return result.rowsAffected;
+//   } catch (err) {
+//     throw err;
+//   } finally {
+//     if (connection) {
+//       try {
+//         await connection.close();
+//       } catch (err) {
+//         console.error("Error closing connection:", err);
+//       }
+//     }
+//   }
+// }
+
+// function generateInsertSQL(headerRow) {
+//   const tableName = "arterra";
+//   const columns = Object.keys(headerRow).join(", ");
+//   const values = Object.keys(headerRow)
+//     .map((key, index) => `:${index + 1}`)
+//     .join(", ");
+
+//   return `INSERT INTO ${tableName} (${columns}) VALUES (${values})`;
+// }
+
+// function getBindDefs(headerRow) {
+//   return Object.values(headerRow).map((value) => ({
+//     type: oracledb.STRING,
+//     maxSize: 255,
+//   }));
+// }
+
+
 app.get('/getNextSerialNumber', async (req, res) => {
   let connection;
+  const tableName = req.query.table;
   try {
     connection = await oracledb.getConnection(dbConfig);
     const result = await connection.execute(`
       SELECT SERIAL_NUMBER 
-      FROM arterra 
+      FROM ${tableName} 
       ORDER BY SERIAL_NUMBER DESC 
       FETCH FIRST 1 ROWS ONLY
     `);

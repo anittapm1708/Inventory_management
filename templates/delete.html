@@ -20,7 +20,8 @@
             <form id="myForm" method="GET" action="/deleteForm">
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="SERIAL_NUMBER" class="form-label">Serial Number <span class="text-danger">*</span></label>
+                        <label for="SERIAL_NUMBER" class="form-label">Serial Number <span
+                                class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="SERIAL_NUMBER" name="SERIAL_NUMBER" required />
                     </div>
 
@@ -315,7 +316,8 @@
                     </div>
                     <div class="submit-btn">
                         <button class="btn-search btn-common" id="searchButton" onclick="fetchData()">Search</button>
-                        <button class="btn-submit btn-common" type="submit" onclick="deleteData()">Delete Record</button>
+                        <button class="btn-submit btn-common" type="submit" onclick="deleteData()">Delete
+                            Record</button>
                     </div>
                 </div>
 
@@ -333,8 +335,10 @@
 
         function fetchData() {
             event.preventDefault();
+            const urlParams = new URLSearchParams(window.location.search);
+            const table = urlParams.get('table');
             const serial_no = document.getElementById('SERIAL_NUMBER').value;
-            fetch(`/fetchData/${serial_no}`) // Assuming you have an endpoint to fetch data based on the incident ID
+            fetch(`/fetchData/${table}/${serial_no}`) // Assuming you have an endpoint to fetch data based on the incident ID
                 .then(response => response.json())
                 .then(data => {
                     populateFormFields(data);
@@ -393,38 +397,47 @@
             document.getElementById('LAST_AUDIT_DATE').value = data.LAST_AUDIT_DATE;
             document.getElementById('LAST_AUDITED_BY').value = data.LAST_AUDITED_BY;
         }
-        document.getElementById('SERIAL_NUMBER').addEventListener('blur', function() {
-    if (!this.value.trim()) {
-        alert('Serial number is a mandatory field!');
-    }
-});
-        function deleteData() {
-            event.preventDefault();
-            const serial_no = document.getElementById('SERIAL_NUMBER').value;
-            const confirmation = confirm(`Are you sure you want to delete the record with Serial Number: ${serial_no}? This action will also archive the record.`);
-
-            if (confirmation) {
-                console.log('serial no to delete:', serial_no); // Log the incident ID
-                fetch(`/deleteData/${serial_no}`, { // Corrected URL string
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ SERIAL_NUMBER: serial_no })
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            console.log('Data deleted successfully.');
-                            // Show pop-up message
-                            alert('Record deleted successfully!!!');
-                        } else {
-                            console.error('Error deleting data.');
-                            alert('Error Deleting Data!!!!');
-                        }
-                    })
-                    .catch(error => console.error('Error deleting data:', error));
+        document.getElementById('SERIAL_NUMBER').addEventListener('blur', function () {
+            if (!this.value.trim()) {
+                alert('Serial number is a mandatory field!');
             }
-        }
+        });
+        function deleteData() {
+                event.preventDefault();
+
+                const urlParams = new URLSearchParams(window.location.search);
+                const table = urlParams.get('table');
+                console.log('Table name from URL in updateData:', table);
+
+                const serial_no = document.getElementById('SERIAL_NUMBER').value;
+                const confirmation = confirm(`Are you sure you want to delete the record with Serial Number: ${serial_no}? This action will also archive the record.`);
+
+
+                const form = document.getElementById('myForm');
+                form.action = `/deleteData/${serial_no}?TABLE_NAME=${table}`;
+
+                if (confirmation) {
+                    console.log('serial no to delete:', serial_no); // Log the incident ID
+                    fetch(form.action, { // Corrected URL string
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ SERIAL_NUMBER: serial_no })
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                console.log('Data deleted successfully.');
+                                // Show pop-up message
+                                alert('Record deleted successfully!!!');
+                            } else {
+                                console.error('Error deleting data.');
+                                alert('Error Deleting Data!!!!');
+                            }
+                        })
+                        .catch(error => console.error('Error deleting data:', error));
+                }
+            }
     </script>
 </body>
 
