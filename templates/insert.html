@@ -11,6 +11,30 @@
             crossorigin="anonymous" />
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <script src="navbar.js" defer></script>
+        <style>
+        .select-container {
+            position: relative;
+        }
+        .select-container select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding-right: 30px;
+        }
+        .select-container::after {
+            content: '\f078';
+            font-family: 'FontAwesome';
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+        .readonly-input {
+            background-color: #e9ecef;
+            pointer-events: none; 
+        }
+         </style>
         <title>Inventory Management Web App</title>
     </head>
     <body>
@@ -22,13 +46,8 @@
                 <form id="myForm" method="POST">
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="SERIAL_NUMBER" class="form-label">Serial Number
-                                </label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="SERIAL_NUMBER"
-                                name="SERIAL_NUMBER" />
+                            <label for="SERIAL_NUMBER" class="form-label">Serial Number</label>
+                            <input type="text" class="form-control readonly-input" id="SERIAL_NUMBER" name="SERIAL_NUMBER" readonly />
                         </div>
                     
                         <div class="col-md-6 mb-3">
@@ -93,8 +112,8 @@
                     
                         <div class="col-md-6 mb-3">
                             <label for="CSI_IF_CUST_PROVIDED_LICENSE"
-                                class="form-label">CSI If Cust Provided
-                                License</label>
+                                class="form-label">CSI (If Cust Provided
+                                License)</label>
                             <input
                                 type="text"
                                 class="form-control"
@@ -200,13 +219,15 @@
                         </div>
                     
                         <div class="col-md-6 mb-3">
-                            <label for="DB_TYPE_DEV_PROD" class="form-label">DB
-                                Type Dev Prod</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="DB_TYPE_DEV_PROD"
-                                name="DB_TYPE_DEV_PROD" />
+                            <label for="DB_TYPE_DEV_PROD" class="form-label">Database Type</label>
+                            <div class="select-container">
+                                <select class="form-control" id="DB_TYPE_DEV_PROD" name="DB_TYPE_DEV_PROD">
+                                    <option value="" disabled selected>Select</option>
+                                    <option value="Product">Product</option>
+                                    <option value="Development">Development</option>
+                                    <option value="Testing">Testing</option>
+                                </select>
+                            </div>
                         </div>
                         </div>
                     <div class="row">
@@ -221,13 +242,14 @@
                         </div>
                     
                         <div class="col-md-6 mb-3">
-                            <label for="IS_DB_DOWN" class="form-label">Is DB
-                                Down</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="IS_DB_DOWN"
-                                name="IS_DB_DOWN" />
+                            <label for="IS_DB_DOWN" class="form-label">Database Status</label>
+                                <div class="select-container">
+                                <select class="form-control" id="IS_DB_DOWN" name="IS_DB_DOWN">
+                                    <option value="" disabled selected>Select</option>
+                                    <option value="Online">Online</option>
+                                    <option value="Offline">Offline</option>
+                                </select>
+                            </div>
                         </div>
                         </div>
                     <div class="row">
@@ -310,7 +332,7 @@
                                 Filesystem</label>
                             <input type="text" class="form-control"
                                 id="FILESYSTEM_ASM_FILESYSTEM"
-                                name="FILESYSTEM_ASM_FILESYSTEM" " />
+                                name="FILESYSTEM_ASM_FILESYSTEM"  />
                         </div>
                     </div>
                     <div class="row">
@@ -468,7 +490,7 @@
                     
                         <div class="col-md-6 mb-3">
                             <label for="MONITORED_BY"
-                                class="form-label">Monitored By</label>
+                                class="form-label">Monitoring Via</label>
                             <input
                                 type="text"
                                 class="form-control"
@@ -508,39 +530,71 @@
                     
                 
                 <script>
-      // Get the table value from the URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const table = urlParams.get('table');
-
-      // Set the action attribute of the form to include the table value
-      document.getElementById('myForm').action = `/submitData?TABLE_NAME=${table}`;
-
-      // Handle form submission
-      document.getElementById('myForm').addEventListener('submit', async function(event) {
-        event.preventDefault();
-        const form = event.target;
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
-        try {
-          const response = await fetch(form.action, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-          });
-
-          if (!response.ok) {
-            const errorText = await response.text();
-            document.getElementById('error-message').textContent = errorText;
-          } else {
-            document.getElementById('error-message').textContent = "Successfully entered the data.";
-          }
-        } catch (error) {
-          document.getElementById('error-message').textContent = "An error occurred while submitting the form.";
-        }
-      });
-    </script>
+                    // Get the table value from the URL
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const table = urlParams.get('table');
+                
+                    // Set the action attribute of the form to include the table value
+                    document.getElementById('myForm').action = `/submitData?TABLE_NAME=${table}`;
+                
+                    // Handle form submission
+                    document.getElementById('myForm').addEventListener('submit', async function(event) {
+                        event.preventDefault();
+                        const form = event.target;
+                        const formData = new FormData(form);
+                        const data = Object.fromEntries(formData.entries());
+                        if (!data.SERIAL_NUMBER) {
+                            alert('Serial Number is a mandatory field.');
+                            return;
+                        }
+                        try {
+                            const response = await fetch(form.action, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(data)
+                            });
+                
+                            if (!response.ok) {
+                                const errorText = await response.text();
+                                document.getElementById('error-message').textContent = errorText;
+                            } else {
+                                alert('Successfully entered the data.');
+                                form.reset();
+                                fetchNextSerialNumber();
+                            }
+                        } catch (error) {
+                            document.getElementById('error-message').textContent = "An error occurred while submitting the form.";
+                        }
+                    });
+                
+                    async function fetchNextSerialNumber() {
+                        try {
+                            const response = await fetch('/getNextSerialNumber');
+                            if (response.ok) {
+                                const { lastSerial } = await response.json();
+                                const nextSerial = generateNextSerial(lastSerial);
+                                document.getElementById('SERIAL_NUMBER').value = nextSerial;
+                            } else {
+                                console.error('Failed to fetch the next serial number.');
+                            }
+                        } catch (error) {
+                            console.error('Error fetching the next serial number:', error);
+                        }
+                    }
+                
+                    function generateNextSerial(lastSerial) {
+                        if (!lastSerial) return 'SN0001'; // Default serial number if none exists
+                        const prefix = lastSerial.match(/^[A-Za-z]*/)[0];
+                        const number = parseInt(lastSerial.replace(prefix, ''), 10);
+                        const nextNumber = number + 1;
+                        return prefix + String(nextNumber).padStart(4, '0');
+                    }
+                
+                    document.addEventListener('DOMContentLoaded', fetchNextSerialNumber);
+                </script>
+                
             </div>
         </div>
         </main>

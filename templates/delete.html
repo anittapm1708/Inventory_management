@@ -20,9 +20,8 @@
             <form id="myForm" method="GET" action="/deleteForm">
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="SERIAL_NUMBER" class="form-label">Serial Number
-                        </label>
-                        <input type="text" class="form-control" id="SERIAL_NUMBER" name="SERIAL_NUMBER" />
+                        <label for="SERIAL_NUMBER" class="form-label">Serial Number <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="SERIAL_NUMBER" name="SERIAL_NUMBER" required />
                     </div>
 
                     <div class="col-md-6 mb-3">
@@ -394,7 +393,11 @@
             document.getElementById('LAST_AUDIT_DATE').value = data.LAST_AUDIT_DATE;
             document.getElementById('LAST_AUDITED_BY').value = data.LAST_AUDITED_BY;
         }
-
+        document.getElementById('SERIAL_NUMBER').addEventListener('blur', function() {
+    if (!this.value.trim()) {
+        alert('Serial number is a mandatory field!');
+    }
+});
         function deleteData() {
             event.preventDefault();
             const serial_no = document.getElementById('SERIAL_NUMBER').value;
@@ -423,7 +426,6 @@
             }
         }
     </script>
-    <h3>NOTE : Deletion requires serial number!!</h3>
 </body>
 
 </html>

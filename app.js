@@ -5,14 +5,12 @@ const path = require("path");
 
 const app = express();
 
-// for bulk upload
 const multer = require("multer");
 const csvParser = require("csv-parser");
 const fs = require("fs");
 
 //const upload = multer({ dest: "uploads/" });
 
-// Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/static", express.static(path.join(__dirname, "static")));
@@ -34,7 +32,6 @@ const dbConfig = {
   connectString: "192.168.0.100/FREEPDB1",
 };
 
-// Serve the index.html file
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "/templates/index.html"));
 });
@@ -64,7 +61,6 @@ app.post("/submitData", async (req, res) => {
   let connection;
 
   try {
-    // Establish database connection
     connection = await oracledb.getConnection(dbConfig);
 
     // Validate table name to prevent SQL injection
@@ -77,7 +73,6 @@ app.post("/submitData", async (req, res) => {
       VALUES
       (:SERIAL_NUMBER, :ACCOUNT_NAME, :PRIMARY_DBA, :BACKUP_DBA, :CUST_SERVICE_PARTNER, :TOM, :LICENSE_OWNERSHIP_CUST_SVVS, :CSI_IF_CUST_PROVIDED_LICENSE, :CUS_POINT_OF_CONTACT_APPLICATION_OWNER, :LOGIN_PROCEDURE, :SERVER_NAME, :IP_ADDRESS, :LOC_IDC, :OS_TYPE, :INSTANCE, :DATABASE_NAME, :PLUGGABLE, :DB_TYPE_DEV_PROD, :DB_ROLE, :IS_DB_DOWN, :LAST_UP_DOWN_DATE, :PRIM_SERVER, :PRIM_INST, :INSTANCE_TYPE, :DB_VERSION, :DB_EDITION_SE_EE, :GRID_INFO, :FILESYSTEM_ASM_FILESYSTEM, :DB_SIZE_MB_GB_TB, :DBID, :OS_WATCHER, :BACKUP_TYPE, :BACKUP_TO_DISK_TAPE, :BACKUP_LOCATION_POLICY_OR_NFS_SHARED_LOCATION, :BACKUP_SCRIPT_LOCATION, :BACKUP_LOG_LOCATION, :BACKUP_SCHEDULED, :CATALOG_Y_N, :CATALOG_DB_SERVER, :CATALOG_USER, :FULL_BACKUP_DETAILS, :INCREMENTAL_BACKUP_DETAILS, :ARCHIVE_BACKUP_DETAILS, :MONITORED_BY, :LAST_AUDIT_DATE, :LAST_AUDITED_BY)`;
 
-    // Ensure all necessary keys are present in the data object
     const keys = [
       "SERIAL_NUMBER",
       "ACCOUNT_NAME",
@@ -127,7 +122,6 @@ app.post("/submitData", async (req, res) => {
       "LAST_AUDITED_BY",
     ];
 
-    // Map the data to the expected format, assigning null where necessary
     const mappedData = keys.reduce((acc, key) => {
       acc[key] = data[key] ?? null;
       return acc;
@@ -174,7 +168,7 @@ app.post("/searchForm", async (req, res) => {
   for (const key in jsonData) {
     if (jsonData[key]) {
       query += `${key} LIKE :${key} AND `;
-      bindValues[key] = `%${jsonData[key]}%`; // Add wildcard characters for LIKE
+      bindValues[key] = `%${jsonData[key]}%`; 
     }
   }
   query = query.slice(0, -5); // Remove the last "AND "
@@ -219,7 +213,6 @@ app.post("/updateForm", async (req, res) => {
   try {
     connection = await oracledb.getConnection(dbConfig); // Establish database connection
 
-    // Begin transaction
     await connection.execute("BEGIN NULL; END;");
 
     
@@ -327,12 +320,10 @@ app.post("/updateForm", async (req, res) => {
       LAST_AUDITED_BY: data.LAST_AUDITED_BY,
     };
 
-    // Execute the update query
     const result = await connection.execute(updateQuery, binds, {
       autoCommit: false,
     });
 
-    // Commit the transaction
     await connection.commit();
 
     console.log("Data updated:", result.rowsAffected);
@@ -340,7 +331,6 @@ app.post("/updateForm", async (req, res) => {
   } catch (error) {
     console.error("Error updating data:", error);
 
-    // Rollback the transaction in case of an error
     if (connection) {
       try {
         await connection.rollback();
@@ -351,7 +341,6 @@ app.post("/updateForm", async (req, res) => {
 
     res.sendStatus(500);
   } finally {
-    // Always close the connection
     if (connection) {
       try {
         await connection.close();
@@ -368,23 +357,19 @@ app.post("/deleteData/:serial_no", async (req, res) => {
   try {
     connection = await oracledb.getConnection(dbConfig); // Establish database connection
 
-    // Begin transaction
     await connection.execute('BEGIN NULL; END;');
 
-    // Archive the record before deletion
     const archiveQuery = `
       INSERT INTO archive_arterra
       SELECT * FROM arterra WHERE SERIAL_NUMBER = :serial_no
     `;
     await connection.execute(archiveQuery, [serial_no]);
 
-    // Delete the record
     const deleteQuery = `
       DELETE FROM arterra WHERE SERIAL_NUMBER = :serial_no
     `;
     const result = await connection.execute(deleteQuery, [serial_no], { autoCommit: false });
 
-    // Commit the transaction
     await connection.commit();
 
     console.log("Data archived and deleted:", result.rowsAffected);
@@ -392,7 +377,6 @@ app.post("/deleteData/:serial_no", async (req, res) => {
   } catch (error) {
     console.error("Error deleting data:", error);
 
-    // Rollback the transaction in case of an error
     if (connection) {
       try {
         await connection.rollback();
@@ -403,7 +387,6 @@ app.post("/deleteData/:serial_no", async (req, res) => {
 
     res.sendStatus(500);
   } finally {
-    // Always close the connection
     if (connection) {
       try {
         await connection.close();
@@ -417,7 +400,6 @@ app.post("/deleteData/:serial_no", async (req, res) => {
 
 const upload = multer({ dest: "uploads/" });
 
-// Route to handle file upload and insertion into Oracle DB
 app.post("/uploadData", upload.single("csvfile"), async (req, res) => {
   if (!req.file) {
 
@@ -427,13 +409,11 @@ app.post("/uploadData", upload.single("csvfile"), async (req, res) => {
   const csvFilePath = path.join(__dirname, req.file.path);
   const results = [];
 
-  // Read CSV file
   fs.createReadStream(csvFilePath)
     .pipe(csvParser())
     .on("data", (data) => results.push(data))
     .on("end", async () => {
       try {
-        // Insert data into Oracle DB
         const rowsInserted = await insertIntoOracle(results);
         fs.unlinkSync(csvFilePath);
         res
@@ -450,23 +430,18 @@ app.post("/uploadData", upload.single("csvfile"), async (req, res) => {
       }
     });
 
-  // Remove uploaded file after reading
   
 });
 
-// Function to insert data into OracleDB
 async function insertIntoOracle(data) {
   let connection;
 
   try {
-    // Connect to Oracle DB
     connection = await oracledb.getConnection(dbConfig);
 
-    // Begin transaction
     const sql = generateInsertSQL(data[0]); // Assuming data[0] has headers
     const binds = data.map((row) => Object.values(row));
 
-    // Execute insert statements in a batch
     const options = { autoCommit: true, bindDefs: getBindDefs(data[0]) };
     const result = await connection.executeMany(sql, binds, options);
 
@@ -475,7 +450,6 @@ async function insertIntoOracle(data) {
   } catch (err) {
     throw err;
   } finally {
-    // Release Oracle DB connection
     if (connection) {
       try {
         await connection.close();
@@ -486,7 +460,6 @@ async function insertIntoOracle(data) {
   }
 }
 
-// Helper function to generate INSERT SQL statement
 function generateInsertSQL(headerRow) {
   const tableName = "arterra";
   const columns = Object.keys(headerRow).join(", ");
@@ -497,14 +470,37 @@ function generateInsertSQL(headerRow) {
   return `INSERT INTO ${tableName} (${columns}) VALUES (${values})`;
 }
 
-// Helper function to generate bind definitions for executeMany
 function getBindDefs(headerRow) {
   return Object.values(headerRow).map((value) => ({
     type: oracledb.STRING,
-    maxSize: 255, // Adjust data type as per your column types in Oracle DB
+    maxSize: 255,
   }));
 }
-
+app.get('/getNextSerialNumber', async (req, res) => {
+  let connection;
+  try {
+    connection = await oracledb.getConnection(dbConfig);
+    const result = await connection.execute(`
+      SELECT SERIAL_NUMBER 
+      FROM arterra 
+      ORDER BY SERIAL_NUMBER DESC 
+      FETCH FIRST 1 ROWS ONLY
+    `);
+    const lastSerial = result.rows.length ? result.rows[0][0] : null;
+    res.json({ lastSerial });
+  } catch (error) {
+    console.error('Error fetching the last serial number:', error);
+    res.status(500).send('Error fetching the last serial number.');
+  } finally {
+    if (connection) {
+      try {
+        await connection.close();
+      } catch (closeError) {
+        console.error('Error closing connection:', closeError);
+      }
+    }
+  }
+});
 
 
 // Start server

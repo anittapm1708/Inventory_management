@@ -20,9 +20,8 @@
             <form id="myForm" method="POST" action="/updateForm">
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="SERIAL_NUMBER" class="form-label">Serial Number
-                        </label>
-                        <input type="text" class="form-control" id="SERIAL_NUMBER" name="SERIAL_NUMBER" />
+                        <label for="SERIAL_NUMBER" class="form-label">Serial Number <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="SERIAL_NUMBER" name="SERIAL_NUMBER" required />
                     </div>
 
                     <div class="col-md-6 mb-3">
@@ -395,38 +394,51 @@
             document.getElementById('LAST_AUDIT_DATE').value = data.LAST_AUDIT_DATE;
             document.getElementById('LAST_AUDITED_BY').value = data.LAST_AUDITED_BY;
         }
-        function updateData() {
-            event.preventDefault();
+        document.getElementById('SERIAL_NUMBER').addEventListener('blur', function() {
+    if (!this.value.trim()) {
+        alert('Serial number is a mandatory field!');
+    }
+});
 
-            // Collect form data
-            const formData = new FormData(document.getElementById('myForm'));
-            const data = {};
-            formData.forEach((value, key) => {
-                data[key] = value;
-            });
+function updateData() {
+    event.preventDefault();
 
-            // Send data to the server
-            fetch(`/updateForm`, { // Corrected URL string
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-                .then(response => {
-                    if (response.ok) {
-                        console.log('Data updated successfully.');
-                        alert('Record updated successfully!!!');
-                    } else {
-                        console.error('Error updating data.');
-                        alert('Error updating Data!!!!');
-                    }
-                })
-                .catch(error => console.error('Error updating data:', error));
-        }
+    const serialNumber = document.getElementById('SERIAL_NUMBER').value.trim();
+
+    if (!serialNumber) {
+        alert('Serial number is required for updating the table!');
+        return;
+    }
+
+    // Collect form data
+    const formData = new FormData(document.getElementById('myForm'));
+    const data = {};
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
+
+    // Send data to the server
+    fetch(`/updateForm`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => {
+            if (response.ok) {
+                console.log('Data updated successfully.');
+                alert('Record updated successfully!!!');
+            } else {
+                console.error('Error updating data.');
+                alert('Error updating Data!!!!');
+            }
+        })
+        .catch(error => console.error('Error updating data:', error));
+}
+
+
     </script>
-    <h3>NOTE : Updating requires serial number!!</h3>
-
 </body>
 
 </html>
